@@ -33,25 +33,26 @@ export async function signup(formData : FormData){
     };
 }
 
-export async function login(formData : FormData){
-    const supabase = await createClient();
+export async function login(prevState: any, formData: FormData) {
+  const supabase = await createClient();
 
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
 
-    const { error } = await supabase.auth.signInWithPassword({
-        email, 
-        password,
-    });
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
-    if(error){
-        return {
-            success : false,
-            error : error.message,
-        };
-    }
+  if (error) {
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
 
-    redirect("/dashboard");
+
+  redirect("/dashboard");
 }
 
 export async function logout(){
